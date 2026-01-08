@@ -1539,6 +1539,7 @@ components:
                     enum:
                       - 409
                   code:
+                    enum:
                       - ABORTED
                       - ALREADY_EXISTS
                       - CONFLICT
