@@ -103,16 +103,16 @@ paths:
         - QoS Booking
       summary: This operation reserves required QoS in advance up to a certain number of devices in certain serviceArea and time slot. The devices have to be attached with a subsequent operation.
       description: |
-        This operation reserves a Quality of Service (QoS) booking for a specified number of devices, service area, and scheduled time/duration. 
-        Devices can be assigned to the booking at any time after the reservation is successful and before the scheduled end-time. 
+        This operation reserves a Quality of Service (QoS) booking for a specified number of devices, service area, and scheduled time/duration.
+        Devices can be assigned to the booking at any time after the reservation is successful and before the scheduled end-time.
 
-        - `Pre-assigned devices :` These devices will be automatically provisioned and activated with the requested QoS profile exactly when the scheduled start time arrives. 
-        - `Late-assigned devices:` Devices assigned after the schedule starts (but before it ends) will be provisioned and activated with the requested QoS profile immediately upon assignment. 
+        - `Pre-assigned devices :` These devices will be automatically provisioned and activated with the requested QoS profile exactly when the scheduled start time arrives.
+        - `Late-assigned devices:` Devices assigned after the schedule starts (but before it ends) will be provisioned and activated with the requested QoS profile immediately upon assignment.
 
-        This operation will return with the following responses:  
-        - `HTTP 201 (status: SUCCESSFUL):` The operator was able to confirm the booking immediately. 
-        - `HTTP 202 (status: PENDING).  :` The operator is unable to confirm immediately, and the booking status is pending. A subsequent notification will be sent to confirm the final status, if available. 
-        - `HTTP 4xx (Failure Condition) :` The operator determined that the booking is unavailable. The response will include specific status codes and descriptions detailing the error. 
+        This operation will return with the following responses:
+        - `HTTP 201 (status: SUCCESSFUL):` The operator was able to confirm the booking immediately.
+        - `HTTP 202 (status: PENDING).  :` The operator is unable to confirm immediately, and the booking status is pending. A subsequent notification will be sent to confirm the final status, if available.
+        - `HTTP 4xx (Failure Condition) :` The operator determined that the booking is unavailable. The response will include specific status codes and descriptions detailing the error.
 
         - Respective `statusInfo` contains additional information under certain conditions.
 
@@ -167,7 +167,7 @@ paths:
                 - notificationsBearerAuth: []
       responses:
         "201":
-          description: Booking creation is successful. 
+          description: Booking creation is successful.
           headers:
             x-correlator:
               $ref: "#/components/headers/x-correlator"
@@ -179,7 +179,7 @@ paths:
                 BOOKING_SUCCESSFUL:
                   $ref: "#/components/examples/BOOKING_SUCCESSFUL"
         "202":
-          description: | 
+          description: |
             Booking request is accepted but pending. 
             Confirmation of success or failure will be sent as a callback notification. 
           headers:
@@ -2065,3 +2065,4 @@ components:
       summary: No bookings found for the device
       description: No bookings are found for the device, value contains only empty array
       value: []
+
