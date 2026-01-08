@@ -105,17 +105,13 @@ paths:
       description: |
         This operation reserves a Quality of Service (QoS) booking for a specified number of devices, service area, and scheduled time/duration.
         Devices can be assigned to the booking at any time after the reservation is successful and before the scheduled end-time.
-
         - `Pre-assigned devices :` These devices will be automatically provisioned and activated with the requested QoS profile exactly when the scheduled start time arrives.
         - `Late-assigned devices:` Devices assigned after the schedule starts (but before it ends) will be provisioned and activated with the requested QoS profile immediately upon assignment.
-
         This operation will return with the following responses:
         - `HTTP 201 (status: SUCCESSFUL):` The operator was able to confirm the booking immediately.
         - `HTTP 202 (status: PENDING).  :` The operator is unable to confirm immediately, and the booking status is pending. A subsequent notification will be sent to confirm the final status, if available.
         - `HTTP 4xx (Failure Condition) :` The operator determined that the booking is unavailable. The response will include specific status codes and descriptions detailing the error.
-
         - Respective `statusInfo` contains additional information under certain conditions.
-
       operationId: createBooking
       parameters:
         - $ref: "#/components/parameters/x-correlator"
@@ -217,11 +213,9 @@ paths:
       summary: Get the Booking information for a given QoS Booking identified by `bookingId`.
       description: |
         This operation is synchronous and retrieves the details of an existing Quality of Service (QoS) booking using its unique identifier (`bookingId`). This `bookingId` is the identifier returned by the initial booking operation upon successful creation.
-
-        Response Scenarios:             
+        Response Scenarios:
           - `HTTP 200 (status: SUCCESSFUL):` The booking details are successfully retrieved and returned in the response body along with the remaining number of devices still can be assigned to the booking.
           - `HTTP 4xx (Failure Condition) :` The request failed, and an appropriate HTTP 4xx error code is returned with a specific status and description.
-
       operationId: getBookingById
       parameters:
         - $ref: "#/components/parameters/BookingId"
@@ -259,17 +253,14 @@ paths:
       summary: This operation cancels an existing QoS Booking and release the associated resources.
       description: |
         This operation cancels and deletes a specific QoS booking using its unique identifier and releases the resources related to that booking. It supports both synchronous and asynchronous processing.
-
         Constraints & Notes:
           - The Quality of Service (QoS) booking must have been created by the same API client identified in the access token.
           - The SUCCESSFUL and FAILURE conditions for a deletion are dependent on the operator's specific implementation.
           - Operators SHOULD properly document their `Booking Cancellation` behavior with clear policies and the respective terms and conditions.
- 
         Response Scenarios:
           - `HTTP 200 (status: SUCCESSFUL):` The booking was deleted immediately (synchronous success).
           - `HTTP 202 (status: PENDING).  :` The request has been accepted for processing, but the deletion is not yet complete (asynchronous processing). A subsequent notification will be sent to confirm the final status.
           - `HTTP 4xx (Failure Condition) :` The request failed, and an appropriate HTTP 4xx error code is returned with a specific status and description.
- 
       operationId: deleteBooking
       parameters:
         - $ref: "#/components/parameters/BookingId"
@@ -326,8 +317,6 @@ paths:
         - If the network could not assign all the requested devices, then status = `PARTIAL_SUCCESS` and the `statusInfo` will have additional information.
         - If a 2-legged access token is used, then the device details SHOULD BE provided as part of the input, and the output will return the array of actually assigned devices.
         - If a 3-legged access token is used, then the device information are identified from the access token, so only one device is implicitly assigned, and the return value may not contain the assigned device information
-
-
       operationId: assignDevices
       parameters:
         - $ref: "#/components/parameters/BookingId"
@@ -399,7 +388,7 @@ paths:
                   $ref: "#/components/examples/ASSIGNMENT_FAILURE_2"
 
         "202":
-          description: | 
+          description: |
             Assignment request is accepted but pending decision.
             Once the decision is made a callback notification will be sent with appropirate success or failure Confirmation
           headers:
@@ -553,7 +542,6 @@ paths:
       summary: Retrieves all the bookings that corresponds to a device
       description: |
         Querying for QoS Booking resource information details for a device.
-
         **NOTES:**
         - The access token may be either 2-legged or 3-legged.
           - If a 3-legged access token is used, the subject associated with the QoS Booking must also be associated with the access token.  In this case the optional `device` parameter MUST NOT be provided in the request.
@@ -561,7 +549,6 @@ paths:
         - The QoS Booking must have been created by the same API client given in the access token.
         - If no QoS booking is found for the requested device, an empty array is returned.
         - This call uses the POST method to comply with the CAMARA Commonalities guidelines for sending sensitive or complex data in API calls. Since the device field may contain personally identifiable information, it should not be sent via GET.
-
       operationId: retrieveBookingByDevice
       parameters:
         - $ref: "#/components/parameters/x-correlator"
@@ -2065,5 +2052,3 @@ components:
       summary: No bookings found for the device
       description: No bookings are found for the device, value contains only empty array
       value: []
-
-
